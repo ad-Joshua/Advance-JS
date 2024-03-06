@@ -13,7 +13,6 @@
 
 //////--------
 
-
 // function outer() {
 //   let b = 0
 //   function inner() {
@@ -30,7 +29,7 @@
 //     let b = 0
 //     function inner() {
 //       b++
-//       console.log(b)                
+//       console.log(b)
 //     }
 //     return inner                     // in js we can return a function(method) from another function
 //   }
@@ -58,13 +57,12 @@
 // function curry(fn){
 //   return function (a) {
 //     return function (b) {
-//       return function (c) { 
+//       return function (c) {
 //         return fn(a, b, c)
 //       }
 //     }
 //   }
 // }
-
 
 // const curriedSum = curry(sum)
 // console.log(curriedSum(2)(3)(4))
@@ -87,7 +85,7 @@
 //   sayMyName : function(){                  //the object to the left of dot is what this keyword is refering
 //     console.log(`my name is ${this.name}`) //this.name is person.name
 //   },
-  
+
 // }
 //person.sayMyName()                            //a1.test
 
@@ -97,7 +95,7 @@
 // const person = {                            //person is an object which has keys and value pair in it.
 //   name : 'Joshua',
 //   sayMyName : function(){
-//     console.log(`my name is ${this.name}`)
+//     console.log(`my name is a ${this.name}`)
 //   },
 //   }
 
@@ -110,8 +108,8 @@
 //-----------------------------
 //new binding
 
-// function person(name){ 
- //this={}                                                  //this is a constructor function
+// function person(name){
+//  //this={}                                                  //this is a constructor function
 //   this.name=name
 // }
 
@@ -171,7 +169,7 @@
 //   this.fName=fName
 //   this.LName=LName
 // }
-// person.prototype.getFullName = function(){  
+// person.prototype.getFullName = function(){
 //   return this.fName + ' ' + this.LName
 // }
 
@@ -194,28 +192,234 @@
 //------------------------------------
 //class
 
-class Person{
-  constrctor(fName, LName){
-    this.fName= fName
-    this.LName=LName
-  }
-  sayMyName(){
-    return this.fName +' '+ this.LName
+// class Person{
+//   constrctor(fName, LName){
+//     this.fName= fName
+//     this.LName=LName
+//   }
+//   sayMyName(){
+//     return this.fName +' '+ this.LName
+//   }
+// }
+
+// const classP1 = new Person('Bruce', 'Wayne')
+// console.log(classP1.sayMyName())
+
+// class SuperHero extends Person{
+//   constructor(fName, LName){
+//     super(fName, LName)
+//     this.isSuperHero = true
+//   }
+//   fightCrime(){
+//     console.log('Fighting Crime')
+//   }
+// }
+
+// const batman = new SuperHero('Bruce', 'Wayne')
+// console.log(batman.sayMyName()
+
+//-----------------------------------------------------
+//call back
+
+// const posts = [{title:'first post', content: 'this is my first post'},
+//               {title:'second post', content: 'this is my second post'}]
+
+// function getPost(){
+
+//   setTimeout(()=>{
+//     let output = '';
+//     posts.forEach((post, index)=>{
+//       output += `<li>${post.title}</li>`
+//     })
+//     document.body.innerHTML = output
+//   }, 1000);
+// }
+
+//---error code----------------------
+
+// function createPost(post){
+
+//   setTimeout(()=>{
+//     posts.push(post)
+//   }, 2000)              js will comple the code from the 1st line and now it displays 1st 2 post on page
+// }                       because getPost() is called earlier
+//here we r also calling the createPost() but not displaying the 3rd post
+//this is beacuse the page is already being printed in line 236
+
+//getPost();
+// createPost({title: 'third post', content: 'this is my third post'});
+
+//---error code-----------------------
+
+//function createPost(post, callback){
+
+//   setTimeout(()=>{
+//     posts.push(post)
+//     callback();
+//   }, 2000)
+// }
+
+// createPost({title: 'third post', content: 'this is my third post'}, getPost)
+
+//----------------------------------------------------------------
+//promises
+
+// const posts = [{title:'first post', content: 'this is my first post'},
+//               {title:'second post', content: 'this is my second post'}]
+
+// function getPost(){
+
+//   setTimeout(()=>{
+//     let output = '';
+//     posts.forEach((post, index)=>{
+//       output += `<li>${post.title}</li>`
+//     })
+//     document.body.innerHTML = output
+//   }, 1000);
+// }
+
+// function createPost(post){
+
+//   return new Promise((resolve, reject)=>{
+//     setTimeout(()=>{
+//       posts.push(post)
+//       let error= false;
+
+//       if(!error){
+//         resolve()
+//       }else{
+//         reject('there is an error')
+//       }
+//       }, 2000)
+
+//   })
+// }
+
+// createPost({title: 'third post', content: 'this is third post'})
+// .then(getPost)
+// .catch(err => console.log(err))
+
+//--promise all-----
+
+// const promise1 = Promise.resolve("Hello world");
+// const promise2 = 10
+// const promise3 = new Promise((resolve, reject)=>{
+//  setTimeout(resolve, 2000, 'Good bye')
+// })
+// const promise4 = fetch('https://jsonplaceholder.typicode.com/users').then((res)=>
+// res.json())
+
+// Promise.all([promise1,promise2,promise3, promise4]).then((value)=>console.log(value))
+
+//-----------------------------------------------------------------------
+//Async/ Await
+
+// const posts = [
+//   { title: "first post", content: "this is my first post" },
+//   { title: "second post", content: "this is my second post" },
+// ];
+
+// function getPost() {
+//   // setTimeout(() => {
+//   //   let output = "";
+//   //   posts.forEach((post, index) => {
+//   //     output += `<li>${post.title}</li>`;
+//   //   });
+//   //   document.body.innerHTML = output;
+//   // }, 1000);
+//   let output = "";
+//   posts.forEach((post, index) => {
+//     output += `<li>${post.title}</li>`;
+//   });
+//   document.body.innerHTML = output;
+// }
+
+// function createPost(post) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       posts.push(post);
+//       let error = false;
+
+//       if (!error) {
+//         resolve();
+//       } else {
+//         reject("there is an error");
+//       }
+//     }, 5000);
+//   });
+// }
+
+// async function init() {
+//   await createPost({ title: "third Post", content: "this is the third post" });
+
+//   getPost();
+// }
+
+// init();
+
+//async/ await with fetch
+
+// async function fetchUsers(){
+
+//   const res = await fetch('https://jsonplaceholder.typicode.com/users');
+//  const data = await res.json();
+//  console.log(data);
+// }
+
+// fetchUsers();
+
+//====================
+// A function that simulates an asynchronous operation
+// function asyncOperation() {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve('Async operation completed');
+//     }, 2000);
+//   });
+// }
+
+// // An async function using async/await
+// async function performAsyncTask() {
+//   console.log('Task started');
+
+//   try {
+//     // Using await to wait for the asynchronous operation to complete
+//     const result = await asyncOperation();
+//     console.log(result);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+
+//   console.log('Task completed');
+// }
+
+// // Calling the async function
+// performAsyncTask();
+
+//===================================
+async function parallelAsyncTasks() {
+  try {
+    const [result1, result2] = await Promise.all([
+      asyncOperation1(),
+      asyncOperation2(),
+    ]);
+    console.log("Result 1:", result1);
+    console.log("Result 2:", result2);
+  } catch (error) {
+    console.error("Error:", error);
   }
 }
 
-const classP1 = new Person('Bruce', 'Wayne')
-console.log(classP1.sayMyName())
-
-class SuperHero extends Person{
-  constructor(fName, LName){
-    super(fName, LName)
-    this.isSuperHero = true
-  }
-  fightCrime(){
-    console.log('Fighting Crime')
-  }
+async function asyncOperation1() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Async operation 1 completed"), 1500);
+  });
 }
 
-const batman = new SuperHero('Bruce', 'Wayne')
-console.log(batman.sayMyName())
+async function asyncOperation2() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Async operation 2 completed"), 1000);
+  });
+}
+
+parallelAsyncTasks();
